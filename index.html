@@ -3,63 +3,130 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Filimon Haylemariyam | Portfolio</title>
+  <title>Filimon Haylemariyam | ML Engineer Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f5f5f5;
+    :root {
+      --primary: #003366;
+      --accent: #00aaff;
+      --bg: #f9f9f9;
+      --text: #333;
+    }
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
     }
     header {
-      background-color: #002f5f;
+      background: linear-gradient(120deg, var(--primary), #0059b3);
       color: white;
-      padding: 2rem;
+      padding: 3rem 1rem;
       text-align: center;
     }
     header h1 {
-      margin: 0;
+      font-size: 2.5rem;
+    }
+    header p {
+      font-size: 1.1rem;
+      margin-top: 0.5rem;
+    }
+    nav {
+      margin-top: 1rem;
     }
     nav a {
       color: white;
-      margin: 0 1rem;
       text-decoration: none;
+      margin: 0 1rem;
+      font-weight: 600;
     }
     .container {
-      padding: 2rem;
-      max-width: 900px;
-      margin: auto;
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+    }
+    .section-title {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 0.5rem;
     }
     .project {
       background: white;
-      border-radius: 8px;
-      padding: 1rem;
-      margin-bottom: 1.5rem;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     }
     .project h3 {
-      margin-top: 0;
+      color: var(--primary);
+    }
+    .project p {
+      margin: 0.5rem 0 1rem;
+    }
+    .project a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .skills {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .skill {
+      background: white;
+      padding: 1rem;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+      font-weight: bold;
+    }
+    .contact-form {
+      background: white;
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+    form input, form textarea {
+      width: 100%;
+      margin-top: 1rem;
+      padding: 0.75rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    form button {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      margin-top: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
     }
     footer {
-      background-color: #002f5f;
+      background-color: var(--primary);
       color: white;
       text-align: center;
-      padding: 1rem;
-    }
-    .links a {
-      margin-right: 1rem;
-      color: #002f5f;
-      text-decoration: none;
-      font-weight: bold;
+      padding: 2rem 1rem;
+      margin-top: 3rem;
     }
   </style>
 </head>
 <body>
   <header>
     <h1>Filimon Haylemariyam</h1>
-    <p>System Administrator | Aspiring ML & Data Engineer</p>
+    <p>System Administrator | Machine Learning & Data Engineering Enthusiast</p>
     <nav>
       <a href="#projects">Projects</a>
+      <a href="#skills">Languages & Tools</a>
+      <a href="#contact">Contact</a>
       <a href="https://github.com/Filimon-H" target="_blank">GitHub</a>
       <a href="https://www.linkedin.com/in/filimon-haylemariyam-ba4aa31a8/" target="_blank">LinkedIn</a>
     </nav>
@@ -67,38 +134,67 @@
 
   <div class="container">
     <section id="projects">
-      <h2>Projects</h2>
+      <h2 class="section-title">🚀 Featured Projects</h2>
       <div class="project">
         <h3>Ethio-Med Telegram Analytics</h3>
-        <p>End-to-end pipeline analyzing Ethiopian medical Telegram channels. Includes scraping, dbt modeling, YOLOv8, FastAPI API.</p>
-        <a href="https://github.com/Filimon-H/ethio-med-telegram-analytics" target="_blank">View on GitHub</a>
+        <p>Designed and deployed a robust data pipeline to scrape medical discussions from Ethiopian Telegram channels. Processed structured and unstructured data, ran YOLOv8 on images, stored in PostgreSQL via dbt, and exposed insights through a FastAPI microservice. Fully dockerized.</p>
+        <a href="https://github.com/Filimon-H/ethio-med-telegram-analytics">🔗 GitHub Repo</a>
       </div>
       <div class="project">
-        <h3>Intelligent Complaint Analysis</h3>
-        <p>RAG-powered chatbot using LangChain, ChromaDB, and Streamlit to analyze customer feedback and complaints.</p>
-        <a href="https://github.com/Filimon-H/Intelligent-Complaint-Analysis" target="_blank">View on GitHub</a>
+        <h3>Intelligent Complaint Analysis (RAG Chatbot)</h3>
+        <p>Developed a Retrieval-Augmented Generation chatbot using LangChain, ChromaDB, and sentence-transformers. Deployed a fully functional chatbot interface with Streamlit for analyzing real customer complaint narratives.</p>
+        <a href="https://github.com/Filimon-H/Intelligent-Complaint-Analysis">🔗 GitHub Repo</a>
       </div>
       <div class="project">
-        <h3>Bank Credit Scoring</h3>
-        <p>End-to-end credit risk scoring API with feature engineering, MLflow tracking, and FastAPI deployment.</p>
-        <a href="https://github.com/Filimon-H/Bank_Credit_Scoring" target="_blank">View on GitHub</a>
+        <h3>Bank Credit Scoring System</h3>
+        <p>Built an ML pipeline to score alternative credit risk from Telegram-based vendors. Feature engineered default proxies, trained models, and served them using FastAPI + MLflow. Added CI/CD pipeline via GitHub Actions & Docker.</p>
+        <a href="https://github.com/Filimon-H/Bank_Credit_Scoring">🔗 GitHub Repo</a>
       </div>
       <div class="project">
-        <h3>Amharic E-commerce NER Extractor</h3>
-        <p>NER on Amharic Telegram messages to identify vendors and build a FinTech lending engine using XLM-RoBERTa.</p>
-        <a href="https://github.com/Filimon-H/Amharic-E-commerce-Data-Extractor" target="_blank">View on GitHub</a>
+        <h3>Amharic E-Commerce NER Extractor</h3>
+        <p>Fine-tuned XLM-RoBERTa and other multilingual models on CoNLL-labeled Amharic data to extract products, prices, vendors, and contact info from chat messages. Includes SHAP-based model interpretation and evaluation.</p>
+        <a href="https://github.com/Filimon-H/Amharic-E-commerce-Data-Extractor">🔗 GitHub Repo</a>
       </div>
       <div class="project">
-        <h3>Insurance Risk Analytics & Predictive Modelling</h3>
-        <p>Machine learning models for insurance claim severity prediction and premium optimization using SHAP and regression/classification.</p>
-        <a href="https://github.com/Filimon-H/Insurance-Risk-Analytics-Predictive-Modelling" target="_blank">View on GitHub</a>
+        <h3>Insurance Risk & Premium Prediction</h3>
+        <p>Trained regression/classification models on historical claim data to predict claim severity and recommend optimized premium pricing. Included statistical testing and SHAP-based model explainability.</p>
+        <a href="https://github.com/Filimon-H/Insurance-Risk-Analytics-Predictive-Modelling">🔗 GitHub Repo</a>
+      </div>
+    </section>
+
+    <section id="skills">
+      <h2 class="section-title">🛠 Languages & Tools</h2>
+      <div class="skills">
+        <div class="skill">Python</div>
+        <div class="skill">SQL</div>
+        <div class="skill">FastAPI</div>
+        <div class="skill">Streamlit</div>
+        <div class="skill">Docker</div>
+        <div class="skill">MLflow</div>
+        <div class="skill">LangChain</div>
+        <div class="skill">ChromaDB</div>
+        <div class="skill">YOLOv8</div>
+        <div class="skill">dbt</div>
+        <div class="skill">PostgreSQL</div>
+        <div class="skill">GitHub Actions</div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2 class="section-title">📬 Contact Me</h2>
+      <div class="contact-form">
+        <form action="mailto:filimon@example.com" method="POST" enctype="text/plain">
+          <input type="text" name="name" placeholder="Your Name" required>
+          <input type="email" name="email" placeholder="Your Email" required>
+          <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+          <button type="submit">Send Message</button>
+        </form>
       </div>
     </section>
   </div>
 
   <footer>
-    <p>Contact: filimon@example.com</p>
-    <p>&copy; 2025 Filimon Haylemariyam</p>
+    <p>&copy; 2025 Filimon Haylemariyam | Built with ❤️ and HTML/CSS</p>
   </footer>
 </body>
 </html>
