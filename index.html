@@ -32,7 +32,7 @@
     .logo{width:36px; height:36px; border-radius:12px; background:var(--brand); box-shadow:var(--shadow)}
     nav a{opacity:.9; padding:8px 12px; border-radius:12px; transition:.25s ease}
     nav a:hover{background:rgba(255,255,255,.06); opacity:1}
-    .btn{display:inline-flex; align-items:center; gap:10px; padding:12px 16px; border-radius:14px; background:var(--brand); color:white; font-weight:600; box-shadow:var(--shadow); border:none}
+    .btn{display:inline-flex; align-items:center; gap:10px; padding:12px 16px; border-radius:14px; background:var(--brand); color:white; font-weight:600; box-shadow:var(--shadow); border:none; cursor:pointer}
     .btn.ghost{background:transparent; border:1px solid rgba(255,255,255,.12)}
 
     /* Hero */
@@ -92,6 +92,28 @@
 
     /* Decorative blobs */
     .blob{position:absolute; inset:auto; width:420px; height:420px; background:radial-gradient(circle at 30% 30%, rgba(110,231,249,.25), transparent 60%), radial-gradient(circle at 70% 70%, rgba(124,58,237,.25), transparent 60%); filter:blur(40px); opacity:.65; border-radius:50%; pointer-events:none; transform:translate(30%, -10%)}
+
+    /* ===== Chatbot Widget ===== */
+    .chat-fab{position:fixed; right:22px; bottom:22px; z-index:60; display:flex; align-items:center; gap:10px}
+    .chat-fab button{width:56px; height:56px; border-radius:18px; background:var(--brand); border:none; box-shadow:0 14px 30px rgba(0,0,0,.45); color:#fff; cursor:pointer; display:grid; place-items:center}
+    .chat-fab .nudge{background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.14); color:#e6eefd; padding:10px 12px; border-radius:12px; font-size:13px; backdrop-filter:blur(6px)}
+    .chat-panel{position:fixed; right:22px; bottom:90px; width:min(380px, 92vw); max-height:70vh; display:none; grid-template-rows:auto 1fr auto; background:linear-gradient(180deg, rgba(18,24,38,.96), rgba(18,24,38,.92)); border:1px solid rgba(255,255,255,.1); border-radius:18px; box-shadow:0 18px 40px rgba(0,0,0,.6); overflow:hidden; z-index:70}
+    .chat-panel.open{display:grid}
+    .chat-head{padding:12px 14px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,.08)}
+    .chat-head b{display:flex; align-items:center; gap:10px}
+    .chat-head .dot{width:10px; height:10px; border-radius:999px; background:#22c55e; box-shadow:0 0 0 3px rgba(34,197,94,.25)}
+    .chat-log{padding:14px; overflow:auto; display:grid; gap:10px}
+    .msg{display:flex; gap:10px; align-items:flex-start}
+    .msg .bubble{max-width:78%; padding:10px 12px; border-radius:14px; border:1px solid rgba(255,255,255,.1); background:rgba(255,255,255,.03)}
+    .msg.user{justify-content:flex-end}
+    .msg.user .bubble{background:rgba(124,58,237,.18); border-color:rgba(124,58,237,.35)}
+    .msg.bot .bubble{background:rgba(255,255,255,.04)}
+    .msg .avatar{width:28px; height:28px; border-radius:8px; background:var(--brand)}
+    .chat-input{display:flex; gap:8px; padding:12px; border-top:1px solid rgba(255,255,255,.08); background:rgba(255,255,255,.02)}
+    .chat-input textarea{flex:1; resize:none; min-height:44px; max-height:140px; border-radius:12px}
+    .send-btn{min-width:90px}
+    .typing{font-size:12px; color:#a9b7d6}
+    .linkish{color:#a8c5ff; text-decoration:underline; text-underline-offset:2px}
   </style>
 </head>
 <body>
@@ -102,9 +124,9 @@
         <span>Filimon Hailemariyam</span>
       </a>
       <nav>
-        <a href="#about">About</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact" class="btn ghost">Contact</a>
+        <a href="#about" aria-label="About section">About</a>
+        <a href="#projects" aria-label="Projects section">Projects</a>
+        <a href="#contact" class="btn ghost" aria-label="Contact section">Contact</a>
       </nav>
     </div>
   </header>
@@ -119,12 +141,12 @@
             ML Engineer • Data Engineer • SysAdmin
           </span>
           <h1>Building practical AI systems that ship.</h1>
-          <p class="lead">I design and deploy data products end‑to‑end: from scraping and pipelines to ML models and clean UIs. Recent work spans RAG chatbots for Ethiopian tax law, fraud detection, credit risk scoring, and analytical APIs powered by dbt and Dagster.</p>
+          <p class="lead">I design and deploy data products end-to-end: from scraping and pipelines to ML models and clean UIs. Recent work spans RAG chatbots for Ethiopian tax law, fraud detection, credit risk scoring, and analytical APIs powered by dbt and Dagster.</p>
 
           <div class="pill-row">
             <span class="pill">Python • FastAPI • Docker</span>
             <span class="pill">LangChain • Chroma/FAISS</span>
-            <span class="pill">PyTorch/TF • scikit‑learn</span>
+            <span class="pill">PyTorch/TF • scikit-learn</span>
             <span class="pill">dbt • Dagster • PostgreSQL</span>
             <span class="pill">PyMC • Time Series</span>
           </div>
@@ -140,8 +162,8 @@
           <ul style="margin:0; padding-left:18px; line-height:1.7; color:#d5e0f6">
             <li>RAG chatbot (Ethiopian Tax Law) with persistent memory and vector search.</li>
             <li>Fraud detection pipeline with SHAP explanations and model monitoring.</li>
-            <li>Brent Oil change‑point dashboard with Bayesian inference (PyMC).</li>
-            <li>End‑to‑end Telegram analytics: scrape → dbt models → FastAPI endpoints.</li>
+            <li>Brent Oil change-point dashboard with Bayesian inference (PyMC).</li>
+            <li>End-to-end Telegram analytics: scrape → dbt models → FastAPI endpoints.</li>
           </ul>
         </aside>
       </div>
@@ -150,17 +172,22 @@
     <section id="about">
       <div class="section-title"><div class="bar"></div><h2>About Me</h2></div>
       <div class="grid about">
-        <div class="card">
-          <p style="margin-top:0">Hi, I’m <strong>Filimon Hailemariyam</strong> — a system administrator turned AI/ML & data engineer. I love shipping products that solve real problems: clean data pipelines, interpretable models, and APIs you can actually use. I’ve built RAG systems, fraud and credit risk models, and dashboards for time‑series analytics.</p>
-          <p>My approach: <em>modular code, reproducible repos, and clear documentation</em>. I’m comfortable across the stack—from Dockerized ETL and dbt transformations to model serving with FastAPI and Streamlit.</p>
-        </div>
+       
+		<div class="card">
+          <p style="margin-top:0">
+               I am a Machine Learning Engineer skilled in Python, SQL, Pandas, LangChain, and FastAPI, with proven experience building end-to-end ML pipelines, deploying AI systems, and applying data analysis for actionable insights. My work spans time series forecasting, Retrieval-Augmented Generation (RAG), and MLOps-driven deployments using Docker and CI/CD workflows.
+          </p>
+           <p> With a background in system administration and infrastructure engineering, I bring a unique strength in designing ML solutions that are not only scalable but also secure and reliable. I am passionate about delivering production-ready models that create measurable business impact by bridging data, AI, and resilient infrastructure.
+          </p>
+         </div>
+
         <div class="card">
           <h3 style="margin:0 0 10px">Tech I use</h3>
           <div class="stack">
             <span class="chip">Python</span>
             <span class="chip">FastAPI</span>
             <span class="chip">Pandas</span>
-            <span class="chip">scikit‑learn</span>
+            <span class="chip">scikit-learn</span>
             <span class="chip">PyTorch</span>
             <span class="chip">TensorFlow</span>
             <span class="chip">LangChain</span>
@@ -183,21 +210,21 @@
         <article class="project">
           <span class="meta">RAG • LLM • Vector DB</span>
           <h3>Ethiopian Tax Law Assistant</h3>
-          <p>A retrieval‑augmented chatbot with ChromaDB + LangChain, persistent conversations, and guardrails. Deployed with FastAPI; docs follow Ready Tensor publication style.</p>
+          <p>A retrieval-augmented chatbot with ChromaDB + LangChain, persistent conversations, and guardrails. Deployed with FastAPI; docs follow Ready Tensor publication style.</p>
           <div class="tags"><span class="tag">LangChain</span><span class="tag">ChromaDB</span><span class="tag">Groq LLM</span><span class="tag">FastAPI</span></div>
           <div class="actions">
-            <a class="btn ghost" href="#" aria-label="View repo">Repo</a>
+            <a class="btn ghost" href="https://github.com/Filimon-H/ethiopian-tax-law-assistant" target="_blank" rel="noopener" aria-label="View repo">Repo</a>
             <a class="btn" href="#contact" aria-label="Get in touch">Hire Me</a>
           </div>
         </article>
         <!-- Project 2 -->
         <article class="project">
           <span class="meta">Fraud • SHAP • MLOps</span>
-          <h3>E‑commerce & Card Fraud Detection</h3>
-          <p>End‑to‑end pipeline: feature engineering, imbalance handling, and SHAP‑based interpretability. Packaged into a reusable sklearn Pipeline.</p>
-          <div class="tags"><span class="tag">scikit‑learn</span><span class="tag">SMOTE</span><span class="tag">SHAP</span><span class="tag">Docker</span></div>
+          <h3>E-commerce & Card Fraud Detection</h3>
+          <p>End-to-end pipeline: feature engineering, imbalance handling, and SHAP-based interpretability. Packaged into a reusable sklearn Pipeline.</p>
+          <div class="tags"><span class="tag">scikit-learn</span><span class="tag">SMOTE</span><span class="tag">SHAP</span><span class="tag">Docker</span></div>
           <div class="actions">
-            <a class="btn ghost" href="#" aria-label="View repo">Repo</a>
+            <a class="btn ghost" href="https://github.com/Filimon-H/fraud-detection-ecommerce-banking" target="_blank" rel="noopener" aria-label="View repo">Repo</a>
             <a class="btn" href="#contact" aria-label="Work together">Discuss</a>
           </div>
         </article>
@@ -208,29 +235,29 @@
           <p>Scraping with Telethon, data lake → Postgres, dbt models, and FastAPI endpoints for search, channel insights, and product mentions.</p>
           <div class="tags"><span class="tag">Telethon</span><span class="tag">PostgreSQL</span><span class="tag">dbt</span><span class="tag">FastAPI</span></div>
           <div class="actions">
-            <a class="btn ghost" href="#" aria-label="View repo">Repo</a>
+            <a class="btn ghost" href="https://github.com/Filimon-H/Amharic-E-commerce-Data-Extractor" target="_blank" rel="noopener" aria-label="View repo">Repo</a>
             <a class="btn" href="#contact" aria-label="Contact">Contact</a>
           </div>
         </article>
         <!-- Project 4 -->
         <article class="project">
           <span class="meta">Bayesian • Time Series</span>
-          <h3>Brent Oil Change‑Point Dashboard</h3>
-          <p>Bayesian change‑point detection with PyMC + interactive React/Flask dashboard. Event overlays and forecasts with toggleable models.</p>
+          <h3>Brent Oil Change-Point Dashboard</h3>
+          <p>Bayesian change-point detection with PyMC + interactive React/Flask dashboard. Event overlays and forecasts with toggleable models.</p>
           <div class="tags"><span class="tag">PyMC</span><span class="tag">Flask + React</span><span class="tag">Time Series</span></div>
           <div class="actions">
-            <a class="btn ghost" href="#" aria-label="View repo">Repo</a>
+            <a class="btn ghost" href="https://github.com/Filimon-H/brent-oil-price-analysis" target="_blank" rel="noopener" aria-label="View repo">Repo</a>
             <a class="btn" href="#contact" aria-label="Talk details">Let’s Chat</a>
           </div>
         </article>
         <!-- Project 5 -->
         <article class="project">
           <span class="meta">Credit Risk • MLOps</span>
-          <h3>Credit Scoring for Micro‑Lending</h3>
+          <h3>Credit Scoring for Micro-Lending</h3>
           <p>Defined a default proxy, trained models with tracked experiments, and deployed a FastAPI scoring service with Docker + CI/CD.</p>
           <div class="tags"><span class="tag">MLflow (planned)</span><span class="tag">FastAPI</span><span class="tag">Docker</span></div>
           <div class="actions">
-            <a class="btn ghost" href="#" aria-label="View repo">Repo</a>
+            <a class="btn ghost" href="https://github.com/Filimon-H/Bank_Credit_Scoring" target="_blank" rel="noopener" aria-label="View repo">Repo</a>
             <a class="btn" href="#contact" aria-label="Discuss project">Discuss</a>
           </div>
         </article>
@@ -241,36 +268,48 @@
           <p>Compared LSTM vs ARIMA for TSLA forecasting, then optimized a TSLA/SPY/BND portfolio with risk metrics and backtests.</p>
           <div class="tags"><span class="tag">LSTM</span><span class="tag">ARIMA</span><span class="tag">MPT</span></div>
           <div class="actions">
-            <a class="btn ghost" href="#" aria-label="View repo">Repo</a>
+            <a class="btn ghost" href="https://github.com/Filimon-H/GMF-investment-portfolio-management" target="_blank" rel="noopener" aria-label="View repo">Repo</a>
             <a class="btn" href="#contact" aria-label="Contact">Contact</a>
           </div>
         </article>
       </div>
     </section>
 
+    <!-- Certifications -->
+    <section id="certifications">
+      <div class="section-title"><div class="bar"></div><h2>Certifications</h2></div>
+      <div class="grid">
+        <div style="background:var(--card); border:1px solid rgba(255,255,255,.08); border-radius:var(--radius-xl); padding:22px; box-shadow:var(--shadow)">
+          <ul style="margin:0; padding-left:18px; line-height:1.8; color:#d5e0f6">
+            <li>10 Academy — Program Completion</li>
+            <li>RAG Systems Expert — ReadyTensor (Agentic AI)</li>
+            <li>Programming Using Python — Kaggle</li>
+            <li>Intro to Machine Learning — Kaggle</li>
+            <li>AZ-900: Microsoft Azure Fundamentals</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
     <section id="contact">
-  <div class="section-title"><div class="bar"></div><h2>Contact Me</h2></div>
-  <div class="contact-wrap">
-    <form action="https://formspree.io/f/movlypka" method="POST">
-      <div class="field">
-        <label for="name">Your name</label>
-        <input id="name" name="name" type="text" placeholder="Jane Doe" required />
-      </div>
-      <div class="field">
-        <label for="email">Email</label>
-        <input id="email" name="email" type="email" placeholder="you@example.com" required />
-      </div>
-      <div class="field">
-        <label for="message">Message</label>
-        <textarea id="message" name="message" placeholder="Tell me about your project…" required></textarea>
-      </div>
-      <input type="hidden" name="_subject" value="New message from your portfolio" />
-      <button class="btn" type="submit">Send Message</button>
-    </form>
-  </div>
-</section>
-
-
+      <div class="section-title"><div class="bar"></div><h2>Contact Me</h2></div>
+      <div class="contact-wrap">
+        <form action="https://formspree.io/f/movlypka" method="POST">
+          <div class="field">
+            <label for="name">Your name</label>
+            <input id="name" name="name" type="text" placeholder="Jane Doe" required />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" placeholder="you@example.com" required />
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Tell me about your project…" required></textarea>
+          </div>
+          <input type="hidden" name="_subject" value="New message from your portfolio" />
+          <button class="btn" type="submit">Send Message</button>
+        </form>
         <div class="contact-card">
           <div class="contact-item">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 12.713l-11.99-7.2v12.487c0 .746.61 1.348 1.36 1.348h21.26c.75 0 1.36-.602 1.36-1.348V5.513L12 12.713z"/><path d="M12 11.287l11.99-7.2H.01l11.99 7.2z"/></svg>
@@ -300,6 +339,26 @@
     </div>
   </footer>
 
+  <!-- ===== Chatbot Floating Button + Panel ===== -->
+  <div class="chat-fab" aria-live="polite">
+    <div class="nudge" id="chat-nudge">Ask about Filimon?</div>
+    <button id="chat-open" aria-label="Open chatbot" title="Ask about Filimon">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4h16a2 2 0 012 2v9a2 2 0 01-2 2H8l-4 3V6a2 2 0 012-2z" fill="currentColor"/></svg>
+    </button>
+  </div>
+
+  <section class="chat-panel" id="chat-panel" aria-label="Chat with Filimon's assistant" role="dialog" aria-modal="true">
+    <div class="chat-head">
+      <b><span class="dot"></span> Filimon Assistant</b>
+      <button id="chat-close" class="btn ghost" aria-label="Close chat">Close</button>
+    </div>
+    <div class="chat-log" id="chat-log" aria-live="polite" aria-atomic="false"></div>
+    <form class="chat-input" id="chat-form">
+      <textarea id="chat-text" placeholder="Ask about Filimon, projects, skills, or availability…" rows="1"></textarea>
+      <button class="btn send-btn" type="submit" aria-label="Send">Send</button>
+    </form>
+  </section>
+
   <script>
     // dynamic year
     document.getElementById('y').textContent = new Date().getFullYear();
@@ -311,6 +370,156 @@
         if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth', block:'start'}); }
       });
     });
+
+    // ===== Chatbot widget logic (with demo mode) =====
+    // Leave API_URL empty for demo mode; set to your FastAPI endpoint when ready (e.g., 'https://api.yourdomain.com/chat')
+    const API_URL = '';
+    const DEMO_MODE = !API_URL;
+
+    const chatPanel = document.getElementById('chat-panel');
+    const chatOpen = document.getElementById('chat-open');
+    const chatClose = document.getElementById('chat-close');
+    const chatLog = document.getElementById('chat-log');
+    const chatForm = document.getElementById('chat-form');
+    const chatText = document.getElementById('chat-text');
+    const nudge = document.getElementById('chat-nudge');
+
+    let history = JSON.parse(localStorage.getItem('fh_chat_history') || '[]');
+
+    function el(tag, opts={}){ const x = document.createElement(tag); Object.assign(x, opts); return x; }
+    function scrollToBottom(){ chatLog.scrollTop = chatLog.scrollHeight; }
+
+    function userMsg(html){
+      const wrap = el('div', { className:'msg user'});
+      const bubble = el('div', { className:'bubble'});
+      bubble.innerHTML = html;
+      wrap.appendChild(bubble);
+      chatLog.appendChild(wrap);
+      scrollToBottom();
+    }
+
+    function botMsg(html){
+      const wrap = el('div', { className:'msg bot'});
+      const avatar = el('div', { className:'avatar', ariaHidden:'true'});
+      const bubble = el('div', { className:'bubble'});
+      bubble.innerHTML = html;
+      wrap.appendChild(avatar);
+      wrap.appendChild(bubble);
+      chatLog.appendChild(wrap);
+      scrollToBottom();
+    }
+
+    function typing(on){
+      let elty = document.getElementById('typing');
+      if(on){
+        if(!elty){
+          elty = el('div', { id:'typing', className:'typing'});
+          elty.textContent = 'Thinking…';
+          chatLog.appendChild(elty);
+          scrollToBottom();
+        }
+      } else if(elty){ elty.remove(); }
+    }
+
+    function sanitize(str){
+      return str.replace(/[&<>]/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[s]));
+    }
+
+    function openChat(){
+      chatPanel.classList.add('open');
+      chatText.focus();
+      if(nudge) nudge.style.display = 'none';
+      if(chatLog.children.length === 0){
+        botMsg("Hi! 👋 I’m Filimon’s assistant. What do you want to ask?<br><br>Try:<br>• What is your RAG stack?<br>• Show me the fraud detection project.<br>• Are you open to remote roles?");
+      }
+    }
+    function closeChat(){ chatPanel.classList.remove('open'); }
+
+    if (chatOpen) chatOpen.addEventListener('click', openChat);
+    if (chatClose) chatClose.addEventListener('click', closeChat);
+
+    // Auto-expand textarea + Enter to send
+    chatText.addEventListener('input', ()=>{
+      chatText.style.height = 'auto';
+      chatText.style.height = Math.min(chatText.scrollHeight, 140) + 'px';
+    });
+    chatText.addEventListener('keydown', (e)=>{
+      if(e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); chatForm.requestSubmit(); }
+    });
+
+    chatForm.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const text = chatText.value.trim();
+      if(!text) return;
+      userMsg(sanitize(text));
+      chatText.value = '';
+      chatText.style.height = '44px';
+      typing(true);
+
+      // Demo answers when backend not connected
+      const demoResponder = (q)=>{
+        const lc = q.toLowerCase();
+        if(lc.includes('rag') || lc.includes('assistant')){
+          return "Demo: My RAG stack uses LangChain + ChromaDB with Groq LLM, served via FastAPI with guardrails. Ask for ‘projects’ or ‘skills’.";
+        }
+        if(lc.includes('project')){
+          return "Demo: Projects → Ethiopian Tax Law RAG, Fraud Detection with SHAP, Brent Oil Change-Point Dashboard, Telegram Analytics API.";
+        }
+        if(lc.includes('skill') || lc.includes('stack')){
+          return "Demo: Python, FastAPI, Docker, LangChain, Chroma/FAISS, scikit-learn, PyTorch/TF, dbt, Dagster, PostgreSQL, PyMC.";
+        }
+        if(lc.includes('available') || lc.includes('hire') || lc.includes('remote')){
+          return "Demo: Yes — based in Ethiopia (UTC+3), open to remote roles. Contact via the form or email filimon3570@gmail.com.";
+        }
+        return "Demo: I can answer about Filimon’s skills, projects, and availability. Try: ‘What is your RAG stack?’ or ‘Show me the fraud project’.";
+      };
+
+      try{
+        let data;
+        if(DEMO_MODE){
+          await new Promise(r=>setTimeout(r, 400)); // simulate latency
+          data = { reply: demoResponder(text), sources: [] };
+        } else {
+          const payload = { message: text, history };
+          const res = await fetch(API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          data = await res.json();
+        }
+
+        typing(false);
+        const reply = (data && data.reply) ? data.reply : 'Sorry, I could not get a response right now.';
+        let html = sanitize(reply);
+
+        if(Array.isArray(data?.sources) && data.sources.length){
+          const links = data.sources
+            .map((s,i)=>`<a class="linkish" href="${s}" target="_blank" rel="noopener">Source ${i+1}</a>`)
+            .join(' · ');
+          html += `<div style="margin-top:6px; font-size:12px; opacity:.9">${links}</div>`;
+        }
+        botMsg(html);
+
+        // Keep short history (last 10 turns)
+        history.push({ role:'user', content:text });
+        history.push({ role:'assistant', content:reply });
+        if(history.length > 20) history = history.slice(-20);
+        localStorage.setItem('fh_chat_history', JSON.stringify(history));
+      }catch(err){
+        typing(false);
+        botMsg('Network error. Please try again.');
+        console.error(err);
+      }
+    });
+
+    // Gentle nudge (optional)
+    setTimeout(()=>{
+      const n = document.getElementById('chat-nudge');
+      if(n && window.matchMedia('(min-width: 600px)').matches){
+        n.style.transform='translateY(-2px)'; setTimeout(()=> n.style.transform='', 600);
+      }
+    }, 1200);
   </script>
 </body>
 </html>
