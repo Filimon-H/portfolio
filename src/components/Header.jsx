@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { profile, navLinks } from '../data/portfolio'
 import useActiveSection from '../hooks/useActiveSection'
 import Icon from './Icon'
+import { openPalette, isMac } from './CommandPalette'
 
 const sectionIds = navLinks.map((l) => l.id)
 
@@ -42,7 +43,7 @@ export default function Header() {
     }`
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50 bg-surface/90 backdrop-blur-md border-b border-hairline">
+    <header className="print:hidden fixed top-0 left-0 w-full z-50 bg-surface/90 backdrop-blur-md border-b border-hairline">
       <div className="h-16 max-w-[1240px] mx-auto px-gutter-sm lg:px-gutter flex items-center justify-between gap-space-md">
         <div className="flex items-center gap-space-md">
           <a className="flex items-center h-10 gap-space-xs font-label-mono text-label-mono uppercase tracking-wider" href="#about">
@@ -65,6 +66,15 @@ export default function Header() {
         </nav>
 
         <div className="flex items-center gap-space-sm">
+          <button
+            type="button"
+            onClick={openPalette}
+            className="hidden md:inline-flex items-center gap-space-sm h-10 px-3 border border-hairline hover:border-primary font-label-mono text-label-mono uppercase text-on-surface-variant hover:text-primary transition-colors duration-quick"
+            aria-label="Open command palette"
+          >
+            Search
+            <kbd className="text-outline">{isMac ? '⌘K' : 'Ctrl K'}</kbd>
+          </button>
           <a className="inline-flex items-center justify-center h-10 bg-primary text-on-primary hover:bg-surface hover:text-primary border border-primary px-3 font-label-mono text-label-mono uppercase transition-colors" href={`mailto:${profile.email}`}>
             Get in Touch
           </a>
@@ -90,6 +100,9 @@ export default function Header() {
                 {l.label}
               </a>
             ))}
+            <button type="button" onClick={() => { setMenuOpen(false); openPalette() }} className="text-left font-label-mono text-label-mono uppercase text-on-surface-variant hover:text-primary py-3 transition-colors duration-quick">
+              Commands…
+            </button>
           </div>
         </nav>
       )}

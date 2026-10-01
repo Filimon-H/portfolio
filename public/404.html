@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>404 — Filimon Haylemariyam</title>
+  <meta name="robots" content="noindex" />
+  <meta name="theme-color" content="#131313" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23131313'/%3E%3Ctext x='16' y='21' font-family='monospace' font-size='13' font-weight='700' fill='%23fff' text-anchor='middle'%3EFH%3C/text%3E%3C/svg%3E" />
+  <style>
+    :root { --bg: #131313; --panel: #0e0e0e; --line: #27272a; --fg: #ffffff; --muted: #8e9192; --dim: #c4c7c8; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; background: var(--bg); color: var(--dim); }
+    body {
+      font: 14px/1.6 "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      display: grid; place-items: center; padding: 16px;
+      background-image: linear-gradient(to right, rgba(255,255,255,.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+    main { width: min(640px, 100%); border: 1px solid var(--line); background: var(--panel); }
+    .bar { display: flex; justify-content: space-between; padding: 8px 16px; border-bottom: 1px solid var(--line); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+    .body { padding: 24px 16px 28px; }
+    .code { font-size: 64px; line-height: 1; letter-spacing: -.04em; color: var(--fg); font-weight: 600; margin: 0 0 20px; }
+    p { margin: 0 0 4px; overflow-wrap: anywhere; }
+    .prompt { color: var(--fg); }
+    .muted { color: var(--muted); }
+    .cursor { display: inline-block; width: .55em; height: 1em; margin-bottom: -.15em; background: var(--fg); animation: blink 1s steps(1) infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) { .cursor { animation: none; } }
+    nav { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+    a { display: inline-flex; align-items: center; min-height: 40px; padding: 0 16px; border: 1px solid var(--line); color: var(--fg); text-decoration: none; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; transition: border-color 120ms linear, background 120ms linear, color 120ms linear; }
+    a:hover { border-color: var(--fg); }
+    a.primary { background: var(--fg); color: #2f3131; border-color: var(--fg); }
+    a.primary:hover { background: var(--bg); color: var(--fg); }
+    a:focus-visible { outline: 1px solid var(--fg); outline-offset: 2px; }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="bar"><span>fh // ml.ai</span><span>exit status 404</span></div>
+    <div class="body">
+      <h1 class="code">404</h1>
+      <p><span class="prompt">$</span> cd <span id="path">/unknown</span></p>
+      <p class="muted">cd: no such file or directory</p>
+      <p class="muted">hint: the page moved, or the link has a typo.</p>
+      <p><span class="prompt">$</span> <span class="cursor" aria-hidden="true"></span></p>
+      <nav>
+        <a class="primary" id="home" href="/portfolio/">cd ~/portfolio</a>
+        <a href="https://github.com/Filimon-H">GitHub ↗</a>
+        <a href="mailto:filimon3570@gmail.com">Email</a>
+      </nav>
+    </div>
+  </main>
+  <script>
+    // textContent only: the requested path is shown, never interpreted as markup.
+    document.getElementById('path').textContent = decodeURIComponent(location.pathname) || '/'
+    // Works on the project site (/portfolio/...) and on a custom domain (root).
+    if (!location.pathname.startsWith('/portfolio/')) document.getElementById('home').setAttribute('href', '/')
+  </script>
+</body>
+</html>

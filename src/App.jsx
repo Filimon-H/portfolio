@@ -5,9 +5,11 @@ import Skills from './components/Skills'
 import Projects from './components/Projects'
 import Experience from './components/Experience'
 import Education from './components/Education'
+import GitHubActivity from './components/GitHubActivity'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 import ChatWidget from './components/ChatWidget'
+import CommandPalette from './components/CommandPalette'
 
 export default function App() {
   useReveal()
@@ -23,11 +25,13 @@ export default function App() {
         <Skills />
         <Projects />
         <Experience />
+        <GitHubActivity />
         <Education />
         <Contact />
       </main>
       <Footer />
       <ChatWidget />
+      <CommandPalette />
     </>
   )
 }

@@ -59,3 +59,96 @@
   html { scroll-behavior: auto; }
   .animate-pulse, .animate-ping, .animate-blink, .animate-panel-in { animation: none; }
 }
+
+/* ---------- Code: monochrome highlight.js theme (weight + brightness, no hue) ---------- */
+.hljs-keyword, .hljs-built_in, .hljs-meta, .hljs-selector-tag { color: #ffffff; font-weight: 600; }
+.hljs-title, .hljs-title.function_, .hljs-title.class_ { color: #ffffff; }
+.hljs-string, .hljs-attr, .hljs-symbol { color: #c6c5cf; }
+.hljs-number, .hljs-literal { color: #e5e2e1; }
+.hljs-comment, .hljs-quote { color: #8e9192; font-style: italic; }
+.hljs-params, .hljs-variable, .hljs-subst { color: #c4c7c8; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .bar-grow { transform-origin: left; transform: scaleX(0); transition: transform 700ms var(--ease-instrument) calc(250ms + var(--bar-d, 0ms)); }
+  [data-revealed] .bar-grow { transform: scaleX(1); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Heatmap fills in as a left-to-right wave (~450ms across the year) */
+  .heat-cell { opacity: 0; transition: opacity 300ms var(--ease-instrument) calc(var(--c) * 8ms); }
+  [data-revealed] .heat-cell { opacity: 1; }
+}
+
+/* ---------- Hero blueprint grid ---------- */
+.blueprint { position: absolute; inset: 0; pointer-events: none; --grid: 48px; }
+.blueprint > div {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(to right, var(--line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+  background-size: var(--grid) var(--grid);
+  background-position: -1px -1px;
+}
+.blueprint-base {
+  --line: rgba(255, 255, 255, 0.04);
+  mask-image: linear-gradient(to bottom, #000 30%, transparent 95%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 30%, transparent 95%);
+}
+.blueprint-spot {
+  --line: rgba(255, 255, 255, 0.16);
+  opacity: 0;
+  transition: opacity var(--dur-standard) var(--ease-instrument);
+  mask-image: radial-gradient(circle 220px at var(--mx, 50%) var(--my, 50%), #000, transparent);
+  -webkit-mask-image: radial-gradient(circle 220px at var(--mx, 50%) var(--my, 50%), #000, transparent);
+}
+.blueprint[data-active] .blueprint-spot { opacity: 1; }
+
+/* ---------- Print: the page becomes a one-column black-on-white résumé ---------- */
+@media print {
+  @page { margin: 14mm 16mm; }
+  html { scroll-padding-top: 0; }
+  body { background: #fff !important; }
+  *, *::before, *::after {
+    color: #111 !important;
+    background: transparent !important;
+    border-color: #d4d4d8 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+  /* Nothing may be left mid-animation on paper */
+  [data-reveal], .draw-path, .draw-pop, .bar-grow, .heat-cell { opacity: 1 !important; transform: none !important; stroke-dashoffset: 0 !important; }
+  .animate-pulse, .animate-ping, .animate-blink, .animate-panel-in { animation: none !important; }
+  main { padding-top: 0 !important; }
+  section { padding-top: 10mm !important; padding-bottom: 0 !important; break-inside: auto; }
+  section#about { padding-top: 0 !important; }
+  h1 { font-size: 28pt !important; line-height: 1.1 !important; }
+  h2.font-display-hero { font-size: 18pt !important; line-height: 1.2 !important; }
+  .font-headline-lg { font-size: 13pt !important; line-height: 1.3 !important; }
+  .font-body-lg { font-size: 10pt !important; line-height: 1.45 !important; }
+  .font-metric-number { font-size: 16pt !important; line-height: 1.2 !important; }
+  article, li[data-role], #education [data-reveal] { break-inside: avoid; }
+  .space-y-margin-lg > * + * { margin-top: 7mm !important; }
+  .pt-space-xl { padding-top: 5mm !important; }
+  .py-margin-lg { padding-top: 8mm !important; padding-bottom: 0 !important; }
+  a { text-decoration: none !important; }
+
+  /* Keep headings with what follows them */
+  h2, .section-heading { break-after: avoid; break-inside: avoid; }
+  #projects > div > div:first-child { display: block !important; }
+
+  /* Compact résumé layout */
+  .tag { border: 0 !important; padding: 0 !important; font-size: 8pt !important; }
+  .tag:not(:last-child)::after { content: " ·"; }
+  ul:has(> .tag) { gap: 0 6px !important; }
+  #skills .grid { grid-template-columns: 1fr !important; row-gap: 3mm !important; }
+  #skills h3 { font-size: 10pt !important; }
+  #skills .space-y-space-md > * + * { margin-top: 1mm !important; }
+  li[data-role] { padding-top: 3mm !important; padding-bottom: 3mm !important; grid-template-columns: 1fr !important; }
+  li[data-role] > div { padding: 0 !important; justify-content: flex-start !important; }
+  .font-headline-md { font-size: 11pt !important; line-height: 1.3 !important; }
+  .font-body-md { font-size: 9pt !important; line-height: 1.4 !important; }
+  #education .grid { grid-template-columns: repeat(3, 1fr) !important; }
+  #projects article { padding-top: 4mm !important; gap: 2mm !important; }
+  #projects article .space-y-space-md > * + * { margin-top: 2mm !important; }
+  #projects .font-metric-number-sm { font-size: 11pt !important; }
+}

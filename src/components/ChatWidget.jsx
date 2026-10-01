@@ -94,6 +94,10 @@ export default function ChatWidget() {
     setOpen(true)
     setMessages((m) => (m.length ? m : [GREETING]))
   }
+  useEffect(() => {
+    window.addEventListener('fh:open-chat', openChat)
+    return () => window.removeEventListener('fh:open-chat', openChat)
+  }, [])
 
   const resizeInput = (el) => {
     el.style.height = 'auto'
@@ -142,7 +146,7 @@ export default function ChatWidget() {
 
   return (
     <>
-      <div className="fixed right-4 bottom-4 sm:right-6 sm:bottom-6 z-[60] flex items-center gap-space-sm">
+      <div className="print:hidden fixed right-4 bottom-4 sm:right-6 sm:bottom-6 z-[60] flex items-center gap-space-sm">
         {!open && nearTop && (
           <div className="hidden sm:block animate-panel-in panel bg-surface-container-lowest px-3 py-2 font-label-mono text-label-mono uppercase text-on-surface-variant">
             &gt; ask_about --filimon
@@ -165,7 +169,7 @@ export default function ChatWidget() {
           id="chat-panel"
           role="dialog"
           aria-label="Chat with Filimon's assistant"
-          className="fixed right-4 sm:right-6 bottom-20 sm:bottom-[88px] z-[70] w-[min(400px,calc(100vw-2rem))] max-h-[70vh] grid grid-rows-[auto_1fr_auto] panel bg-surface-container-lowest animate-panel-in"
+          className="print:hidden fixed right-4 sm:right-6 bottom-20 sm:bottom-[88px] z-[70] w-[min(400px,calc(100vw-2rem))] max-h-[70vh] grid grid-rows-[auto_1fr_auto] panel bg-surface-container-lowest animate-panel-in"
         >
           <div className="flex items-center justify-between px-space-md py-space-sm border-b border-hairline">
             <span className="flex items-center gap-space-xs font-label-mono text-label-mono uppercase text-primary">

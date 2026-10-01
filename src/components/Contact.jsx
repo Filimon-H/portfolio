@@ -52,12 +52,12 @@ export default function Contact() {
   }
 
   return (
-    <section className="w-full bg-surface-container-lowest py-margin-lg" id="contact">
+    <section className="print:hidden w-full bg-surface py-margin-lg" id="contact">
       <Container className="grid grid-cols-1 lg:grid-cols-12 gap-space-xl lg:gap-gutter-lg items-start">
         <div className="lg:col-span-6 space-y-space-lg" {...reveal()}>
           <div className="space-y-space-sm">
-            <div className="eyebrow">05 / Contact</div>
-            <h2 className="font-display-hero text-display-hero-mobile lg:text-display-hero text-primary tracking-tight">Let’s talk.</h2>
+            <div className="eyebrow">06 / Contact</div>
+            <h2 className="font-display-hero text-display-hero-mobile lg:text-display-hero text-primary tracking-tight print:hidden">Let’s talk.</h2>
             <p className="font-body-lg text-body-lg text-on-surface-variant max-w-md">{profile.contactBlurb}</p>
           </div>
 
@@ -65,7 +65,7 @@ export default function Contact() {
             <a href={`mailto:${profile.email}`} className="inline-block py-1.5 font-headline-md text-headline-md text-primary underline decoration-hairline underline-offset-8 hover:decoration-primary transition-colors duration-quick break-all">
               {profile.email}
             </a>
-            <button type="button" onClick={copyEmail} className="inline-flex items-center min-h-[40px] font-label-mono text-label-mono uppercase text-on-surface-variant hover:text-primary transition-colors duration-quick" aria-live="polite">
+            <button type="button" onClick={copyEmail} className="print:hidden inline-flex items-center min-h-[40px] font-label-mono text-label-mono uppercase text-on-surface-variant hover:text-primary transition-colors duration-quick" aria-live="polite">
               {copied ? 'Copied ✓' : 'Copy email'}
             </button>
           </div>
@@ -81,7 +81,7 @@ export default function Contact() {
           </div>
         </div>
 
-        <form className="lg:col-span-6 space-y-space-md" onSubmit={submit} {...reveal(1, 100)}>
+        <form className="print:hidden lg:col-span-6 space-y-space-md" onSubmit={submit} {...reveal(1, 100)}>
           {fields.map((f) => (
             <div key={f.name} className="space-y-1.5">
               <label htmlFor={`contact-${f.name}`} className="eyebrow">{f.label}</label>

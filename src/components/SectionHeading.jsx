@@ -1,13 +1,15 @@
 import { reveal } from '../hooks/useReveal'
+import ScrambleText from './ScrambleText'
 
 // Small "02 / Projects" label, plus an optional large visible title.
 // Without a title the label doubles as the section's (screen-reader) heading.
 export default function SectionHeading({ index, label, title }) {
+  const eyebrow = `${String(index).padStart(2, '0')} / ${label}`
   return (
-    <div {...reveal()} className="space-y-space-sm">
-      <div className="eyebrow" aria-hidden={title ? undefined : 'true'}>{String(index).padStart(2, '0')} / {label}</div>
+    <div {...reveal()} className="section-heading space-y-space-sm">
+      <ScrambleText text={eyebrow} className="eyebrow block" {...(!title && { "aria-hidden": "true" })} />
       {title
-        ? <h2 className="font-display-hero text-display-hero-mobile lg:text-display-hero text-primary tracking-tight">{title}</h2>
+        ? <ScrambleText as="h2" text={title} className="font-display-hero text-display-hero-mobile lg:text-display-hero text-primary tracking-tight" />
         : <h2 className="sr-only">{label}</h2>}
     </div>
   )

@@ -3,7 +3,7 @@ import Container from './Container'
 
 export default function Footer() {
   return (
-    <footer className="w-full bg-surface-container-lowest border-t border-hairline">
+    <footer className="print:hidden w-full bg-surface-container-lowest border-t border-hairline">
       <Container className="py-space-xl flex flex-col sm:flex-row items-center justify-between gap-space-md font-label-mono text-label-mono uppercase text-outline">
         <span>© {new Date().getFullYear()} {profile.name}</span>
         <ul className="flex items-center gap-space-lg">
