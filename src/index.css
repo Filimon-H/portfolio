@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ease-instrument: cubic-bezier(0.2, 0, 0, 1);
+  --dur-quick: 120ms;
+  --dur-standard: 240ms;
+  --dur-slow: 480ms;
+}
+
+@layer base {
+  html, body { margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; scroll-padding-top: 4rem; }
+  body { overscroll-behavior: none; font-variant-numeric: tabular-nums; }
+
+  /* DESIGN.md: focus ring is a stark 1px white outline */
+  :focus-visible { outline: 1px solid #ffffff; outline-offset: 2px; }
+}
+
+@layer components {
+  .tag { @apply px-2 py-1 bg-surface-container-lowest border border-hairline font-label-mono text-label-mono text-on-surface uppercase; }
+  .eyebrow { @apply font-label-mono text-label-mono uppercase text-outline; }
+  .btn-primary { @apply inline-flex items-center gap-space-xs px-5 py-3 bg-primary text-on-primary border border-primary font-label-mono text-label-mono uppercase tracking-wider hover:bg-surface hover:text-primary active:translate-y-px transition duration-quick ease-instrument; }
+  .btn-secondary { @apply inline-flex items-center gap-space-xs px-5 py-3 bg-surface-container-lowest border border-hairline text-primary font-label-mono text-label-mono uppercase tracking-wider hover:border-primary active:translate-y-px transition duration-quick ease-instrument; }
+  .panel { @apply border border-hairline transition-colors duration-quick ease-linear; }
+  .panel-hover { @apply hover:border-outline; }
+  .field { @apply w-full bg-surface-container-lowest border border-hairline focus:border-primary focus-visible:outline-none px-3 py-2.5 font-code-body text-code-body text-on-surface placeholder:text-outline transition-colors duration-quick; }
+}
+
+.material-symbols-outlined { font-size: inherit; line-height: 1; }
+::-webkit-scrollbar { display: none; }
+
+/* ---------- Motion (only when the user hasn't asked for reduced motion) ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  /* Scroll reveal: 12px rise + fade, staggered via --d. Border/colour hovers keep their own quick timing. */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(12px);
+    transition-property: opacity, transform, border-color, background-color, color;
+    transition-duration: var(--dur-slow), var(--dur-slow), var(--dur-quick), var(--dur-quick), var(--dur-quick);
+    transition-timing-function: var(--ease-instrument), var(--ease-instrument), linear, linear, linear;
+    transition-delay: var(--d, 0ms), var(--d, 0ms), 0ms, 0ms, 0ms;
+  }
+  [data-reveal][data-revealed] { opacity: 1; transform: none; }
+
+  /* Charts draw themselves once their card is revealed */
+  .draw-path { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1200ms var(--ease-instrument) 300ms; }
+  [data-revealed] .draw-path { stroke-dashoffset: 0; }
+  .draw-pop { opacity: 0; transition: opacity var(--dur-standard) var(--ease-instrument) 1400ms; }
+  [data-revealed] .draw-pop { opacity: 1; }
+
+  /* Ambient: data flowing along DAG edges (linear is right for continuous loops) */
+  .flow { stroke-dasharray: 3 3; animation: flow 1.2s linear infinite; }
+  @keyframes flow { to { stroke-dashoffset: -12; } }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .animate-pulse, .animate-ping, .animate-blink, .animate-panel-in { animation: none; }
+}
